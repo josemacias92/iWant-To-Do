@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>iWant To-Do</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="estilos.css" type="text/css">
+    <script defer src="print.bundle.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <div id="header">
+            <span id="logo">iWant To-Do</span>
+            <span id="saludo">Jose M.</span>
+        </div>
+
+        <div id="main">
+
+            <div class="lista">
+                <div class="cabecera">
+                    <span class="nombre">Teralco</span>
+                    <div class="acciones">
+                        <button type="button" class="anadir"></button>
+                        <button type="button" class="eliminar"></button>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="cabecera show">
+                        <button class="opener"></button>
+                        <span class="prioridad alta"></span>
+                        <span class="titulo">App de To-Do List</span>
+                        <span class="fecha">30/03/2022</span>
+                        <button type="button" class="eliminar"></button>
+                    </div>
+                    <div class="contenido show">
+                        <div class="descripcion">Crear una aplicación web capaz de gestiona varias listas de tareas.
+                        </div>
+                        <div class="checklist">
+                            <div class="task">
+                                <input type="checkbox" name="done111" id="done111"/>
+                                <label for="done111" class="tarea">Crear Layout</label>
+                            </div>
+                            <div class="task">
+                                <input type="checkbox" name="done112" id="done112"/>
+                                <label for="done112" class="tarea">Hacer lógica trasera</label>
+                            </div>
+                        </div>
+                        <button type="button" class="editar"></button>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="cabecera">
+                        <span class="prioridad media"></span>
+                        <span class="fecha">07/04/2022</span>
+                        <span class="titulo">Hundir la flota</span>
+                        <button type="button" class="eliminar"></button>
+                    </div>
+
+                    <div class="contenido">
+                        <div class="descripcion">Impletar el juego de hundir la flota en version web.</div>
+                        <div class="checklist">
+                            <div class="task">
+                                <input type="checkbox" name="done" id="done">
+                                <span class="tarea">Estudiar el tema</span>
+                            </div>
+                            <div class="task">
+                                <input type="checkbox" name="done" id="done">
+                                <span class="tarea">Crear Layout</span>
+                            </div>
+                            <div class="task">
+                                <input type="checkbox" name="done" id="done">
+                                <span class="tarea">Hacer lógica trasera</span>
+                            </div>
+                            <div class="task">
+                                <input type="checkbox" name="done" id="done">
+                                <span class="tarea">Implementar los tests</span>
+                            </div>
+                        </div>
+                        <button type="button" class="editar"></button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="lista">
+                <div class="cabecera">
+                    <span class="nombre">Teralco</span>
+                    <div class="acciones">
+                        <button type="button" class="anadir"></button>
+                        <button type="button" class="eliminar"></button>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="cabecera">
+                        <span class="prioridad alta"></span>
+                        <span class="fecha">30/03/2022</span>
+                        <span class="titulo">App de To-Do List</span>
+                        <button type="button" class="eliminar"></button>
+                    </div>
+                    <div class="contenido">
+                        <div class="descripcion">Crear una aplicación web capaz de gestiona varias listas de tareas.
+                        </div>
+                        <div class="checklist">
+                            <div class="task">
+                                <input type="checkbox" name="done" id="done">
+                                <span class="tarea">Crear Layout</span>
+                            </div>
+                            <div class="task">
+                                <input type="checkbox" name="done" id="done">
+                                <span class="tarea">Hacer lógica trasera</span>
+                            </div>
+                        </div>
+                        <button type="button" class="editar"></button>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="cabecera">
+                        <span class="prioridad media"></span>
+                        <span class="fecha">07/04/2022</span>
+                        <span class="titulo">Hundir la flota</span>
+                        <button type="button" class="eliminar"></button>
+                    </div>
+
+                    <div class="contenido">
+                        <div class="descripcion">Impletar el juego de hundir la flota en version web.</div>
+                        <div class="checklist">
+                            <div class="task">
+                                <input type="checkbox" name="done" id="done">
+                                <span class="tarea">Estudiar el tema</span>
+                            </div>
+                            <div class="task">
+                                <input type="checkbox" name="done" id="done">
+                                <span class="tarea">Crear Layout</span>
+                            </div>
+                            <div class="task">
+                                <input type="checkbox" name="done" id="done">
+                                <span class="tarea">Hacer lógica trasera</span>
+                            </div>
+                            <div class="task">
+                                <input type="checkbox" name="done" id="done">
+                                <span class="tarea">Implementar los tests</span>
+                            </div>
+                        </div>
+                        <button type="button" class="editar"></button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script defer src="index.bundle.js"></script>
+</body>
+
+</html>
