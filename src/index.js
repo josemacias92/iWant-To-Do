@@ -1,16 +1,20 @@
 'use strict'
 
 import _ from 'lodash';
+import { Lista, Tarea, CheckItem } from './modelos.js';
+import { compareAsc, format } from 'date-fns'
 import InsertarEnDOM from './print.js';
+
+const appName = "iWant To-Do";
 
 main()
 
 function main() {
 
     const app = document.createElement('div');
-    app.id = "app"
+    app.id = "app";
 
-    renderizarHeader(app, "iWant To-Do", "Jose M.");
+    renderizarHeader(app, appName, "Jose M.");
 
     const main = InsertarEnDOM(app, "div", "main", "", "")
 
@@ -27,42 +31,83 @@ function renderizarHeader(contenedor, nombreApp, usuario) {
     return header;
 }
 
-function renderizarLista(contenedor, lista) {
+function renderizarLista(idLista, contenedor, lista) {
 
-    const lista = InsertarEnDOM(contenedor, "div", "", "lista", "")
-    const cabecera = InsertarEnDOM(lista, "div", "", "lista", "")
+    const listaView = InsertarEnDOM(contenedor, "div", "", "lista", "")
+    const cabecera = generarCabeceraLista(idLista, listaView, lista.nombre)
+    renderizarTareas(listaView, idLista, lista.tareas)
 
     return app;
 }
 
-class Tarea {
+function generarCabeceraLista(idLista, lista, nombre) {
 
-    constructor(id, titulo, priporidad, fecha, descripcion, checklist){
-        this.id = id;
-        this.titulo = titulo;
-        this.priporidad = priporidad;
-        this.fecha = fecha;
-        this.descripcion = descripcion;
-        this.checklist = checklist;
-    }
+    const cabecera = InsertarEnDOM(lista, "div", "", "cabecera", "")
+    InsertarEnDOM(lista, "span", "", "nombre", nombre)
+    const acciones = InsertarEnDOM(lista, "div", "", "acciones", "")
+    const anadir = InsertarEnDOM(acciones, "button", "", "anadir", "")
+    const eliminar = InsertarEnDOM(acciones, "button", "", "eliminar", "")
+    anadir.dataset.indexLista = eliminar.dataset.indexLista = idLista
+
+    return cabecera;
 }
 
-class Lista {
+function renderizarTareas (listaView, idLista, tareas) {
+   
+    for (let i = 0; i < tareas.length; i++) {
+        const tarea = tareas[i];
+        const tareaView = InsertarEnDOM(listaView, "div", "", "item", "")
+        generarCabeceraTarea(tareaView, idLista, i, tarea.prioridad, tarea.titulo, tarea.fecha)
+        generarContenidoTarea(tareaView, idLista, i, tarea.descripcion, tarea.checklist)
+    } 
 
-    constructor(id, nombre, tareas){
-        this.id = id;
-        this.nombre = nombre;
-        this.tareas = tareas;
-    }
 }
 
-class CheckItem {
+function generarCabeceraTarea(tareaView, idLista, idTarea, prioridad, titulo, fecha) {
 
-    constructor(id, hecho, nombre){
-        this.id = id;
-        this.nombre = nombre;
-        this.hecho = hecho;
-    }
+    const cabecera = InsertarEnDOM(tareaView, "div", "", "cabecera", "")
+    const opener = InsertarEnDOM(cabecera, "button", "", "opener", "")
+    InsertarEnDOM(cabecera, "span", "", "prioridad", "").classList.add(`${prioridad}`)
+    InsertarEnDOM(cabecera, "span", "", "titulo", titulo)
+    InsertarEnDOM(cabecera, "span", "", "fecha", format(fecha, 'dd/MM/yyyy'))
+    const eliminar = InsertarEnDOM(cabecera, "button", "", "eliminar", "")
+    eliminar.dataset.indexLista = opener.dataset.indexLista = cabecera.dataset.indexLista = idLista
+    eliminar.dataset.indexTarea = opener.dataset.indexTarea = cabecera.dataset.indexTarea = idTarea
+
+    return cabecera
 }
 
-document.body.appendChild(component());
+function generarContenidoTarea(tareaView, idLista, idTarea, descripcion, checklist) {
+
+    const contenido = InsertarEnDOM(tareaView, "div", "", "contenido", "")
+    InsertarEnDOM(contenido, "span", "", "descripcion", descripcion)
+    generarChecklist(contenido, idLista, idTarea, checklist)
+    const editar = InsertarEnDOM(contenido, "button", "", "editar", "")
+    editar.dataset.indexLista = idLista
+    editar.dataset.indexTarea = idTarea
+
+    return contenido
+}
+
+function generarChecklist(contenedor, idLista, idTarea, checklist) {
+
+    const lista = InsertarEnDOM(contenedor, "div", "", "checklist", "")
+
+    for (let i = 0; i < checklist.length; i++) {
+
+        const item = checklist[i];
+        const task = InsertarEnDOM(lista, "div", "", "task", "")
+
+        const check = InsertarEnDOM(task, "input", `done${idLista + idTarea + i}`, "", "")
+        check.setAttribute("name", check.id)
+        check.checked = item.hecho       
+        check.dataset.indexLista = idLista
+        check.dataset.indexTarea = idTarea
+        check.dataset.indexCheck = i
+
+        const label = InsertarEnDOM(task, "label", "", "", item.etiqueta)
+        label.setAttribute("for", check.id)
+    }
+
+    return lista
+}
