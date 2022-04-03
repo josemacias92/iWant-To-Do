@@ -99,9 +99,11 @@ function getSamples() {
     var check111 = new CheckItem(true, "Estudiar tema")
     var check112 = new CheckItem(true, "Desarrollar interfaz")
     var check113 = new CheckItem(true, "Implementar funcionalidades")
+    var check114 = new CheckItem(true, "Desplegar en GitHub Pages")
     checklist11.push(check111)
     checklist11.push(check112)
     checklist11.push(check113)
+    checklist11.push(check114)
 
     var tarea11 = new Tarea("Hacer app de lista de tareas", "alta", format(new Date(2022, 3, 31), 'dd/MM/yyyy'), "Desarrollar una app web de gestión de listas de tareas", checklist11)
     tareas1.push(tarea11)
@@ -135,7 +137,7 @@ function getSamples() {
     checklist21.push(check212)
     checklist21.push(check213)
 
-    var tarea21 = new Tarea("Limpiar la habitacion", "baja", format(new Date(2022, 4, 1), 'dd/MM/yyyy'), "Guardar todo debajo de la alfombra para que el ligue que viene de visita esta noche no se espante.", checklist21)
+    var tarea21 = new Tarea("Limpiar la habitacion", "baja", format(new Date(2022, 4, 1), 'dd/MM/yyyy'), "Guardar todo debajo de la alfombra.", checklist21)
     tareas2.push(tarea21)
     //
 
