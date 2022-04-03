@@ -1,7 +1,8 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: {
     index: './src/index.js',
     printer: './src/printer.js',
@@ -9,10 +10,12 @@ module.exports = {
     viewmodel: './src/viewmodel.js',
     dialogos: './src/dialogos.js',
   },
-  devtool: 'inline-source-map',
-  devServer: {
-    static: './dist',
-  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Output Management',
+    }),
+  ],
+
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
