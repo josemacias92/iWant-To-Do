@@ -7,30 +7,352 @@
     --inspiration: 'Inspiration', Arial, Helvetica, cursive;
     --noto-sherif: 'Noto Serif', Arial, Helvetica, serif;
     --really-white: #fdfbf7;
-    --darkest-wood: #584831;
+    --coffee: #584831;
     --fake-wood: #81633959;
     --dark-wood: #7e694e;
     --soft-wood: #af9573;
     --woody: #e4caa8;
     --golden-way: #f1bd78;
     --goldenlicious: #ffdaaa;
+    --toffee: #f3d7b9;
     --white-chocolate: #ffeed9;
     --brown-chocolate: #f5d3a6;
     --brown-sugar: #947d5f;
-    --crystal-clear: rgba(210, 241, 255, 0.089);
+    --lucid: rgba(225, 212, 235, 0.596);
+    --translucid: rgba(120, 113, 125, 0.292);
+    --crystal-clear: rgba(35, 30, 39, 0.084);
+    --private: rgba(15, 16, 16, 0.532);
+    --sunglasses: rgba(15, 16, 16, 0.699);
+    --secret: rgba(15, 16, 16, 0.82);
 }
 
 * {
-    /* border: 1px dotted gray; */
-    font-family: var(--roboto);
+    font-family: var(--noto-sherif);
 }
 
+/* ESTILO ITEMS PRINCIPAL */
+.card {
+    padding: 5px 10px 10px 10px;
+    border-radius: 15px;
+    border: 2px solid var(--golden-way);
+    box-shadow: 5px 8px 12px -2px black;
+    background-color: var(--white-chocolate);
+    overflow: visible;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+  }
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 7.5rem;
+    background-color: var(--secret);
+    color: var(--goldenlicious);
+    font-size: 0.8rem;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    left: 0rem;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--private) transparent transparent transparent;
+}
+
+.tooltip *:hover + .tooltiptext,
+.prioridad:hover .tooltiptext{
+    visibility: visible;
+    opacity: 1;
+}
+
+.prioridad:hover .tooltiptext{
+    bottom: 1.2rem;
+    right: 54rem;
+    left: -0.3rem;
+}
+
+::-webkit-scrollbar {
+    background-color: var(--fake-wood);
+    width: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--coffee);
+}
+
+/* CAPAS SOPORTE */
 #app {
     background-image: url('../img/lost-in-forest.jpg');
     padding: 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
+#main {
+    padding: 20px;
+    margin-top: 10px;
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid var(--private);
+    align-items: start;
+    justify-content: space-evenly;
+}
 
+#footer, #main {
+    backdrop-filter: blur(1px);
+    background-color: var(--crystal-clear);
+    border-radius: 5px;
+} 
+
+.vitrina {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    background-color: var(--private);
+    height: 120vh;
+    width: 100vw;
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+}
+
+.capa {
+    height: 38rem;
+    place-self: center;
+    justify-self: center;
+    align-self: center;
+    display: flex;
+    justify-items: flex-start;
+    align-items: flex-start;
+}
+
+.oculto {
+    visibility: collapse;
+}
+
+#main,
+#footer,
+#anadir-lista,
+.tooltiptext {
+    box-shadow: 5px 8px 8px -4px black;
+    border: 1px solid var(--translucid);
+}
+
+/* DIALOGOS */
+form.card {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    z-index: 2;
+    width: 26rem;
+    box-shadow: 12px 8px 15px 8px black;
+    margin-top: 0rem;
+    max-height: 40rem;
+    display: flex;
+    justify-items: flex-start;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+form .titulo {
+    text-align: center;
+}
+
+#dialogo-bienvenida,
+#dialogo-confirmacion,
+#dialogo-informacion {
+    margin-top: 10rem;
+}
+
+button.aceptar,
+button.cancelar,
+button.borrar {
+    border: 1px solid var(--soft-wood);
+    border: 1px solid var(--golden-way);
+    background-color: var(--toffee);
+    width: 5rem;
+    height: 2rem;
+    border-radius: 10px;
+    font-family: var(--noto-sherif);
+    color: var(--soft-wood);
+    margin: 5px;
+    box-shadow: 1px 3px 10px 2px var(--fake-wood);
+}
+
+button.borrar {
+    width: 8rem;
+}
+
+button.aceptar:hover,
+button.cancelar:hover,
+button.borrar:hover {
+    color: var(--coffee);
+}
+
+button.aceptar:active,
+button.cancelar:active,
+button.borrar:active {
+    background-color: var(--soft-wood);
+    border: none;
+    box-shadow: none;
+}
+
+/* CONFIRMACION */
+.botonera-dialogo {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    align-self: center;
+}
+
+/* BIENVENIDA */
+#editor-usuario {
+    margin: 15px;
+    flex-direction: column;
+    display: flex;
+}
+
+#editor-usuario input {
+    margin: 10px 5px 0px 5px;
+}
+
+#dialogo-bienvenida .botonera-dialogo {
+    align-self: flex-end;
+    margin: 0px 10px 5px 10px;
+}
+
+/** FORMULARIO TAREAS **/
+#editor1 {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    align-items: end;
+    justify-content: end;
+}
+
+label {
+    padding-top: 10px;
+}
+
+input {
+    height: 1.5rem;
+}
+
+input,
+textarea {
+    background-color: floralwhite;
+    border: 1px solid var(--golden-way);
+    border-radius: 5px;
+    outline: none;
+    margin-top: 4px;
+    font-family: var(--noto-sherif);
+    color: var(--soft-wood);
+    padding-left: 0.3rem;
+}
+
+textarea {
+    height: 3rem;
+}
+
+#descripcion {
+    grid-row: 4 / span 2;
+}
+
+/* PRIORIDAD Y FECHA */
+#editor2 {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 0px;
+}
+
+#prioridad {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    padding: 0px 1rem 0px 3.5rem;
+}
+
+input[type="radio"] {
+    position: relative;
+    top: 0.25rem;
+}
+
+.etiqueta {
+    height: 0.5rem;
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+}
+
+input[type="date"] {
+    width: 8rem;
+    margin: 0px 0.5rem 0px 8.5rem;
+    font-family: var(--noto-sherif);
+
+}
+
+/* CHECKLIST */
+#editor3 {
+    border: 1px solid var(--golden-way);
+    padding: 0px 15px 10px 5px;
+    margin-top: 20px;
+    box-shadow: 1px -3px 10px 2px var(--fake-wood);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#editor3 .checklist {
+    margin: 0.5rem;
+    margin-top: 0.8rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#checklist {
+    position: sticky;
+}
+
+#task {
+    width: 15rem;
+    margin-left: 1rem;
+    box-shadow: inset -1px -1px 2px 1px var(--fake-wood);
+    border: none;
+    border-radius: 0px;
+    background-color: var(--really-white);
+}
+
+#botonera-dialogo-tarea {
+    margin-top: 13px;
+    align-self: flex-end;
+}
+
+/* INTERFAZ */
 /* CABECERA */
 #header {
     display: flex;
@@ -38,56 +360,99 @@
     align-items: center;
     color: aliceblue;
     padding: 10px;
-}    
+}
+
+.header {
+    display: flex;
+    align-items: center;
+}
 
 #logo {
     font-family: var(--inspiration);
     font-size: 4rem;
     margin-left: 10px;
     text-shadow: 5px 5px 2px black;
+    margin-right: 40px;
 }
 
-#saludo {
+a {
+    text-decoration: none;
+    color: var(--lucid);
     margin-right: 10px;
     font-family: var(--noto-sherif);
 }
 
-/* LISTAS */
-#main {
-    padding: 20px;
-    margin-top: 20px;
-    display: grid;
-    gap: 15px;
-    grid-template-columns: repeat(auto-fit, 22rem);
-    background-color: var(--crystal-clear);
-    box-shadow: 5px 8px 8px -4px black;
+a:hover {
+    color: aliceblue;
+}
+
+#anadir-lista {
+    height: 5rem;
+    width: 7rem;
+    color: var(--golden-way);
     border-radius: 5px;
+    background-color: var(--private);
+    margin: 0px 20px;
+    padding: 3px;
 }
 
-.lista  {
-    padding: 10px;
-    border-radius: 15px;
-    border: 2px solid var(--golden-way);
-    box-shadow: 5px 8px 12px -2px black;
-    background-color: var(--white-chocolate);
+#anadir-lista:hover {
+    color: var(--goldenlicious);
+    background-color: var(--sunglasses);
 }
 
-.cabecera  {
+#anadir-lista:active {
+    background-color: var(--secret);
+}
+
+/** LISTAS **/
+#main .card {
+    width: 24.8rem;
+    margin: 10px;
+    padding-bottom: 2px;
+}
+
+.cabecera {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.lista > .cabecera {
+.card>.cabecera {
     margin: 2px 10px;
 }
 
-.nombre {
+.nombre,
+.contenedor-flex input {
+    margin-right: 5px;
+}
+
+.nombre,
+form .titulo {
     font-weight: 600;
     font-size: 1.3rem;
     padding-bottom: 3px;
     font-family: var(--noto-sherif);
-    color: var(--darkest-wood);
+    color: var(--coffee);
+}
+
+::placeholder {
+    color: var(--fake-wood);
+}
+
+#editor-nombre {
+    position: relative;
+    right: 6.35rem;
+
+    z-index: 1;
+}
+
+.nombre {
+    border: none;
+    flex: 1;
+    background-color: var(--white-chocolate);
+    height: 1.3rem;
+    padding-bottom: 0.5rem;
 }
 
 button {
@@ -99,12 +464,12 @@ button {
     background-size: 1.2rem;
 }
 
-.lista > .cabecera button.eliminar {
+.card>.cabecera:hover button.eliminar {
     background-image: url('../img/trash-can-outline.svg');
 }
 
-.lista > .cabecera button.anadir{
-    background-image: url('../img/plus.svg');   
+.card>.cabecera button.anadir {
+    background-image: url('../img/plus.svg');
     width: 1.2rem;
     height: 1.2rem;
 }
@@ -115,55 +480,69 @@ button {
     border-radius: 13px;
 }
 
-.item > .cabecera {
+.item>.cabecera {
     background-color: var(--woody);
-    box-shadow: 6px 16px 17px -17px black;
 }
 
-.item > .cabecera.show {
+.item.show>.cabecera {
     background-color: var(--brown-chocolate);
+    box-shadow: 0px 10px 7px -7px var(--fake-wood);
 }
 
-.item > .cabecera:hover .opener{
-    background-color: var(--darkest-wood);
+.item>.cabecera:hover .opener {
+    background-color: var(--coffee);
 }
 
-.item > .cabecera:hover {
+.item>.cabecera:hover {
     background-color: var(--brown-chocolate);
 
 }
 
-.item > .cabecera:active {
+.item>.cabecera:active {
     background-color: var(--woody);
 }
 
 .item .opener {
     border-radius: 50px;
-    background-image: url('../img/menu-right.svg');   
+    background-image: url('../img/menu-right.svg');
     width: 1.2rem;
     height: 1.2rem;
     margin: 3px;
-    animation-duration: 1s;
-    animation-direction: reverse;
+    animation-name: spinback;
+    animation-duration: 0.15s;
+    animation-fill-mode: forwards;
 }
 
-.item .opener.show {
+.item.show .opener {
     animation-name: spin;
-    animation-duration: 1s;
+    animation-duration: 0.25s;
+    animation-fill-mode: forwards;
 }
 
-@keyframes spin { 
-    from { 
-        transform: rotate(0deg); 
-    } to { 
-        transform: rotate(90deg); 
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(90deg);
+    }
+}
+
+@keyframes spinback {
+    from {
+        transform: rotate(90deg);
+    }
+
+    to {
+        transform: rotate(0deg);
     }
 }
 
 .item .prioridad {
-    border-radius: 50px;
+    border-radius: 100px;
     width: 0.6rem;
-    height: 0.6rem;
+    height: 0.62rem;
 }
 
 .prioridad.alta {
@@ -175,10 +554,11 @@ button {
 }
 
 .prioridad.baja {
-    background-color: greenyellow;
+    background-color: green;
 }
 
-.item .titulo {
+.item .titulo,
+form label {
     flex: 1;
     font-size: 0.9rem;
     font-family: var(--noto-sherif);
@@ -197,172 +577,276 @@ button {
     margin: 0px 10px;
 }
 
-.item button.eliminar {
-    background-image: url('../img/window-close.svg');
-    margin: 6px;
-}
-
 /* CONTENIDO TAREA */
-.item > .contenido {
+.item>.contenido {
     background-color: floralwhite;
-    color: var(--darkest-wood);
+    color: var(--coffee);
     box-shadow: inset -3px -6px 10px 2px var(--fake-wood);
-    padding: 8px;
     margin: 0px 0px 4px 0px;
-    display: none;
+    max-height: 0rem;
+    transition: max-height 0.15s ease-out;
+    overflow: hidden;
 }
 
-.contenido.show {
-   display: block;
+.item.show>.contenido {
+    display: flex;
+    flex-direction: column;
+    max-height: 100rem;
+    transition: max-height 0.25s ease-in;
 }
 
+.contenido * {
+    font-size: 0.7rem;
+    font-family: var(--noto-sherif);
+    color: var(--dark-wood);
+}
 
 .item .descripcion {
-    font-size: 0.7rem;
-    margin: 10px 0px;
+    margin: 18px 18px 10px 18px;
 }
 
-/* CHECKLIST */
+/** CHECKLIST **/
 .checklist {
     font-size: 0.7rem;
-    margin: 5px;
+    margin: 5px 22px 0px 30px;
+    overflow: scroll;
+    overflow-x: hidden;
+    max-height: 96rem;
 }
 
-input[type="checkbox"] + label:before {
+.checklist::-webkit-scrollbar {
+    background-color: transparent;
+}
+
+.checklist::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
+/* CHECKBOX */
+input[type="checkbox"]+label:before {
     position: relative;
     bottom: 7px;
-	content: "";
-	width: 12px;
-	height: 12px;
-	float: left;
-	margin: 0.5em 0.5em 0 0;
-	border: 2px solid var(--goldenlicious);
-	background: white;
+    content: "";
+    width: 12px;
+    height: 12px;
+    float: left;
+    margin: 0.5em 0.5em 0 0;
+    border: 2px solid var(--goldenlicious);
+    background: white;
     border-radius: 4px;
 }
 
-input[type="checkbox"]:hover + label:before {
-	border-color: var(--woody);
+input[type="checkbox"]:hover+label:before {
+    border-color: var(--woody);
 }
 
-input[type="checkbox"]:checked + label:before {
-	border-color: var(--soft-wood)
+input[type="checkbox"]:checked+label:before {
+    border-color: var(--soft-wood)
 }
 
-input[type="checkbox"]:checked + label:after {
+input[type="checkbox"]:checked:hover+label:before {
+    border-color: var(--dark-wood)
+}
+
+input[type="checkbox"]:disabled+label:before {
+    background-color: var(--white-chocolate);
+    border-color: var(--golden-way)
+}
+
+input[type="checkbox"]:checked+label:after {
     content: "";
     width: 0.7rem;
-    height: 0.15rem;
+    height: 0.10rem;
     border: 3px solid var(--dark-wood);
     float: left;
-    margin-left: -1.25rem;
+    margin-left: -1.3rem;
     border-right: 0;
     border-top: 0;
-    margin-top: 0.15rem;
+    margin-top: 0.22rem;
     transform: rotate(-55deg);
 }
 
-input[type="checkbox"] {
-	display: none;
+input[type="checkbox"]:checked:disabled+label:after {
+    border-color: var(--goldenlicious)
 }
 
-/* TAREA CHECKABLE */
+input[type="checkbox"] {
+    display: none;
+}
+
+/* SUBTAREA CHECKLIST */
 .task {
     display: flex;
     align-items: center;
 }
 
-button.editar {
-    position: relative;
-    top: 5px;
-    left: 285px;
-    margin: 0px;
-    background-image: url('../img/pencil.svg');
+.task label {
+    flex: 1;
+} 
+
+.task button.eliminar {
+    visibility: hidden;
 }
 
-/* ICONOS */
+#editor3 .task button.eliminar {
+    visibility: visible;
+}
+
+.contenido button.editar,
+.acciones button.editar {
+    width: 1.35rem;
+    height: 1.65rem;
+}
+
+.contenido button.editar {
+    bottom: 0.5rem;
+    left: 22.4rem;
+    position: relative;
+}
+
+.item .contenido:hover button.editar,
+.card>.acciones button.editar {
+    background-image: url('../img/pencil.svg');
+    background-repeat: no-repeat;
+}
+
+/* FOOTER */
+#footer {
+    padding: 30px 25px;
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+/** MASCARAS ICONOS **/
 @supports (-webkit-mask: url("")) or (mask: url("")) {
 
-    .lista > .cabecera button.anadir {
-      -webkit-mask: url('../img/plus.svg');
-      mask: url('../img/plus.svg');
-      mask-size: cover;
-      width: 1.35rem;
-      height: 1.35rem;
-      background: var(--dark-wood);
-      margin-bottom: 5px;
-    }
-
-    .lista > .cabecera button.anadir:hover {
-        background: #f1bd78;
-    }
-
-    .lista > .cabecera button.anadir:active {
-        background: var(--dark-wood)
-    }
-
-    .lista > .cabecera button.eliminar {
-        -webkit-mask: url('../img/trash-can-outline.svg');
-        mask: url('../img/trash-can-outline.svg');
-        mask-size: cover;
-        width: 1.6rem;
-        height: 1.35rem;
-        background: var(--dark-wood);
-        margin-bottom: 5px;
-      }
-  
-    .lista > .cabecera button.eliminar:hover {
-        background: var(--golden-way);
-    }
-
-    .lista > .cabecera button.eliminar:active {
-        background: var(--soft-wood);
-    }
-
+    /* FLECHA ABRIR TAREA */
     .item .opener {
-        -webkit-mask: url('../img/menu-right.svg');   
-        mask: url('../img/menu-right.svg');   
-
+        -webkit-mask: url('../img/menu-right.svg');
+        mask: url('../img/menu-right.svg');
         background: antiquewhite;
         width: 1.35rem;
         height: 1.5rem;
     }
 
-    .item > .cabecera:hover .opener{
+    .item>.cabecera:hover .opener {
         background: var(--dark-wood);
     }
 
-    .item button.eliminar {
-        -webkit-mask: url('../img/window-close.svg');
-        mask: url('../img/window-close.svg');
-        mask-size: cover;
-        width: 1.45rem;
-        height: 1.45rem;
+    /* COLORES BOTONES LISTA */
+    .card>.cabecera:hover button.eliminar,
+    .card>.cabecera:hover button.editar,
+    button.anadir,
+    button.ok {
+        background: var(--dark-wood);
+        background-repeat: no-repeat;
+    }
+
+    .card>.cabecera button.eliminar:hover,
+    .card>.cabecera button.editar:hover,
+    .card>.cabecera button.anadir:hover,
+    button.anadir:hover,
+    button.ok:hover {
+        background: var(--golden-way);
+    }
+
+    .card>.cabecera button.eliminar:active,
+    .card>.cabecera button.editar:active,
+    .card>.cabecera button.anadir:active,
+    button.anadir:active,
+    button.ok:active {
         background: var(--soft-wood);
     }
 
-    .item .cabecera button.eliminar:hover {
-        background: var(--goldenlicious);
+    /* ACEPTAR */
+    button.ok {
+        -webkit-mask: url('../img/check.svg');
+        mask: url('../img/check.svg');
+        mask-size: cover;
+        width: 1.45rem;
+        height: 1.4rem;
     }
 
-    .item .cabecera button.eliminar:active {
-        background: var(--dark-wood);
-    }
-
-    .item button.editar {
+    /* EDITAR NOMBRE LISTA */
+    .card>.cabecera button.editar {
         -webkit-mask: url('../img/pencil.svg');
         mask: url('../img/pencil.svg');
         mask-size: cover;
+        background-repeat: no-repeat;
+        width: 1.55rem;
+        height: 1.55rem;
+        position: relative;
+        top: 0.15rem;
+    }
+
+    /* ELIMINAR LISTA */
+    .card>.cabecera button.eliminar {
+        width: 1.6rem;
+        height: 1.35rem;
+        margin-bottom: 5px;
+        margin-left: 1px;
+        -webkit-mask: url('../img/trash-can-outline.svg');
+        mask: url('../img/trash-can-outline.svg');
+        mask-size: cover;
+    }
+
+    /* AÑADIR GENERAL */
+    button.anadir {
+        -webkit-mask: url('../img/plus.svg');
+        mask: url('../img/plus.svg');
+        mask-size: cover;
+        background: var(--dark-wood);
+    }
+
+    /* AÑADIR TAREA */
+    .card>.cabecera button.anadir {
+        width: 1.35rem;
+        height: 1.35rem;
+    }
+
+    /* ELIMINAR TAREA */
+    .item .cabecera button.eliminar, 
+    .task button.eliminar {
+        margin: 0px 3px 0px 0px;
+        width: 1.45rem;
+        height: 1.45rem;
+    }
+
+    .item>.cabecera:hover button.eliminar,
+    .item.show>.cabecera button.eliminar, 
+    .task:hover button.eliminar {
+        -webkit-mask: url('../img/window-close.svg');
+        mask: url('../img/window-close.svg');
+        mask-size: cover;
+        background: var(--soft-wood);
+    }
+
+    .item>.cabecera button.eliminar:hover, 
+    .task button.eliminar:hover {
+        background: var(--dark-wood);
+    }
+
+    .item>.cabecera button.eliminar:active, 
+    .task button.eliminar:active {
+        background: var(--goldenlicious);
+    }
+
+    /* EDITAR TAREA  */
+    .item .contenido:hover button.editar {
+        -webkit-mask: url('../img/pencil.svg');
+        mask: url('../img/pencil.svg');
+        mask-size: cover;
+        background-repeat: no-repeat;
         width: 1.65rem;
         height: 1.65rem;
         background: var(--soft-wood);
     }
 
-    .item button.editar:hover {
+    .item .contenido button.editar:hover {
         background: var(--golden-way);
     }
 
-    .item button.editar:active {
+    .item .contenido button.editar:active {
         background: var(--dark-wood);
     }
 }

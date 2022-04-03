@@ -1,8 +1,8 @@
 class Tarea {
 
-    constructor(titulo, prioridad, fecha, descripcion, checklist){
+    constructor(titulo, priporidad, fecha, descripcion, checklist){
         this.titulo = titulo;
-        this.prioridad = prioridad;
+        this.priporidad = priporidad;
         this.fecha = fecha;
         this.descripcion = descripcion;
         this.checklist = checklist;

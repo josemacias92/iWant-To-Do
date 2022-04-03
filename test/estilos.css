@@ -1,0 +1,368 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inspiration&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inspiration&family=Noto+Serif:ital,wght@1,700&display=swap');
+
+:root {
+    --roboto: 'Roboto', Arial, Helvetica, sans-serif;
+    --inspiration: 'Inspiration', Arial, Helvetica, cursive;
+    --noto-sherif: 'Noto Serif', Arial, Helvetica, serif;
+    --really-white: #fdfbf7;
+    --darkest-wood: #584831;
+    --fake-wood: #81633959;
+    --dark-wood: #7e694e;
+    --soft-wood: #af9573;
+    --woody: #e4caa8;
+    --golden-way: #f1bd78;
+    --goldenlicious: #ffdaaa;
+    --white-chocolate: #ffeed9;
+    --brown-chocolate: #f5d3a6;
+    --brown-sugar: #947d5f;
+    --crystal-clear: rgba(210, 241, 255, 0.089);
+}
+
+* {
+    /* border: 1px dotted gray; */
+    font-family: var(--roboto);
+}
+
+#app {
+    background-image: url('../img/lost-in-forest.jpg');
+    padding: 20px;
+}
+
+
+/* CABECERA */
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: aliceblue;
+    padding: 10px;
+}    
+
+#logo {
+    font-family: var(--inspiration);
+    font-size: 4rem;
+    margin-left: 10px;
+    text-shadow: 5px 5px 2px black;
+}
+
+#saludo {
+    margin-right: 10px;
+    font-family: var(--noto-sherif);
+}
+
+/* LISTAS */
+#main {
+    padding: 20px;
+    margin-top: 20px;
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(auto-fit, 22rem);
+    background-color: var(--crystal-clear);
+    box-shadow: 5px 8px 8px -4px black;
+    border-radius: 5px;
+}
+
+.lista  {
+    padding: 10px;
+    border-radius: 15px;
+    border: 2px solid var(--golden-way);
+    box-shadow: 5px 8px 12px -2px black;
+    background-color: var(--white-chocolate);
+}
+
+.cabecera  {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lista > .cabecera {
+    margin: 2px 10px;
+}
+
+.nombre {
+    font-weight: 600;
+    font-size: 1.3rem;
+    padding-bottom: 3px;
+    font-family: var(--noto-sherif);
+    color: var(--darkest-wood);
+}
+
+button {
+    border-radius: 100px;
+    border: none;
+    background-color: transparent;
+    width: 1.2rem;
+    height: 1.2rem;
+    background-size: 1.2rem;
+}
+
+.lista > .cabecera button.eliminar {
+    background-image: url('../img/trash-can-outline.svg');
+}
+
+.lista > .cabecera button.anadir{
+    background-image: url('../img/plus.svg');   
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+/* TAREAS */
+.item {
+    margin: 3px;
+    border-radius: 13px;
+}
+
+.item > .cabecera {
+    background-color: var(--woody);
+    box-shadow: 6px 16px 17px -17px black;
+}
+
+.item > .cabecera.show {
+    background-color: var(--brown-chocolate);
+}
+
+.item > .cabecera:hover .opener{
+    background-color: var(--darkest-wood);
+}
+
+.item > .cabecera:hover {
+    background-color: var(--brown-chocolate);
+
+}
+
+.item > .cabecera:active {
+    background-color: var(--woody);
+}
+
+.item .opener {
+    border-radius: 50px;
+    background-image: url('../img/menu-right.svg');   
+    width: 1.2rem;
+    height: 1.2rem;
+    margin: 3px;
+    animation-duration: 1s;
+    animation-direction: reverse;
+}
+
+.item .opener.show {
+    animation-name: spin;
+    animation-duration: 1s;
+}
+
+@keyframes spin { 
+    from { 
+        transform: rotate(0deg); 
+    } to { 
+        transform: rotate(90deg); 
+    }
+}
+
+.item .prioridad {
+    border-radius: 50px;
+    width: 0.6rem;
+    height: 0.6rem;
+}
+
+.prioridad.alta {
+    background-color: red;
+}
+
+.prioridad.media {
+    background-color: orange;
+}
+
+.prioridad.baja {
+    background-color: greenyellow;
+}
+
+.item .titulo {
+    flex: 1;
+    font-size: 0.9rem;
+    font-family: var(--noto-sherif);
+    font-style: oblique;
+    color: var(--dark-wood);
+    margin: 0px 8px;
+}
+
+.fecha {
+    font-size: 0.9rem;
+    font-weight: bolder;
+    font-family: var(--inspiration);
+    color: var(--really-white);
+    position: relative;
+    top: 1px;
+    margin: 0px 10px;
+}
+
+.item button.eliminar {
+    background-image: url('../img/window-close.svg');
+    margin: 6px;
+}
+
+/* CONTENIDO TAREA */
+.item > .contenido {
+    background-color: floralwhite;
+    color: var(--darkest-wood);
+    box-shadow: inset -3px -6px 10px 2px var(--fake-wood);
+    padding: 8px;
+    margin: 0px 0px 4px 0px;
+    display: none;
+}
+
+.contenido.show {
+   display: block;
+}
+
+
+.item .descripcion {
+    font-size: 0.7rem;
+    margin: 10px 0px;
+}
+
+/* CHECKLIST */
+.checklist {
+    font-size: 0.7rem;
+    margin: 5px;
+}
+
+input[type="checkbox"] + label:before {
+    position: relative;
+    bottom: 7px;
+	content: "";
+	width: 12px;
+	height: 12px;
+	float: left;
+	margin: 0.5em 0.5em 0 0;
+	border: 2px solid var(--goldenlicious);
+	background: white;
+    border-radius: 4px;
+}
+
+input[type="checkbox"]:hover + label:before {
+	border-color: var(--woody);
+}
+
+input[type="checkbox"]:checked + label:before {
+	border-color: var(--soft-wood)
+}
+
+input[type="checkbox"]:checked + label:after {
+    content: "";
+    width: 0.7rem;
+    height: 0.15rem;
+    border: 3px solid var(--dark-wood);
+    float: left;
+    margin-left: -1.25rem;
+    border-right: 0;
+    border-top: 0;
+    margin-top: 0.15rem;
+    transform: rotate(-55deg);
+}
+
+input[type="checkbox"] {
+	display: none;
+}
+
+/* TAREA CHECKABLE */
+.task {
+    display: flex;
+    align-items: center;
+}
+
+button.editar {
+    position: relative;
+    top: 5px;
+    left: 285px;
+    margin: 0px;
+    background-image: url('../img/pencil.svg');
+}
+
+/* ICONOS */
+@supports (-webkit-mask: url("")) or (mask: url("")) {
+
+    .lista > .cabecera button.anadir {
+      -webkit-mask: url('../img/plus.svg');
+      mask: url('../img/plus.svg');
+      mask-size: cover;
+      width: 1.35rem;
+      height: 1.35rem;
+      background: var(--dark-wood);
+      margin-bottom: 5px;
+    }
+
+    .lista > .cabecera button.anadir:hover {
+        background: #f1bd78;
+    }
+
+    .lista > .cabecera button.anadir:active {
+        background: var(--dark-wood)
+    }
+
+    .lista > .cabecera button.eliminar {
+        -webkit-mask: url('../img/trash-can-outline.svg');
+        mask: url('../img/trash-can-outline.svg');
+        mask-size: cover;
+        width: 1.6rem;
+        height: 1.35rem;
+        background: var(--dark-wood);
+        margin-bottom: 5px;
+      }
+  
+    .lista > .cabecera button.eliminar:hover {
+        background: var(--golden-way);
+    }
+
+    .lista > .cabecera button.eliminar:active {
+        background: var(--soft-wood);
+    }
+
+    .item .opener {
+        -webkit-mask: url('../img/menu-right.svg');   
+        mask: url('../img/menu-right.svg');   
+
+        background: antiquewhite;
+        width: 1.35rem;
+        height: 1.5rem;
+    }
+
+    .item > .cabecera:hover .opener{
+        background: var(--dark-wood);
+    }
+
+    .item button.eliminar {
+        -webkit-mask: url('../img/window-close.svg');
+        mask: url('../img/window-close.svg');
+        mask-size: cover;
+        width: 1.45rem;
+        height: 1.45rem;
+        background: var(--soft-wood);
+    }
+
+    .item .cabecera button.eliminar:hover {
+        background: var(--goldenlicious);
+    }
+
+    .item .cabecera button.eliminar:active {
+        background: var(--dark-wood);
+    }
+
+    .item button.editar {
+        -webkit-mask: url('../img/pencil.svg');
+        mask: url('../img/pencil.svg');
+        mask-size: cover;
+        width: 1.65rem;
+        height: 1.65rem;
+        background: var(--soft-wood);
+    }
+
+    .item button.editar:hover {
+        background: var(--golden-way);
+    }
+
+    .item button.editar:active {
+        background: var(--dark-wood);
+    }
+}

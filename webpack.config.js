@@ -4,7 +4,10 @@ module.exports = {
   mode: 'development',
   entry: {
     index: './src/index.js',
-    print: './src/print.js',
+    printer: './src/printer.js',
+    modelos: './src/modelos.js',
+    viewmodel: './src/viewmodel.js',
+    dialogos: './src/dialogos.js',
   },
   devtool: 'inline-source-map',
   devServer: {
