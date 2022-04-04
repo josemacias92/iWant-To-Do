@@ -137,8 +137,8 @@ export default class Interfaz {
     mostrarEditorNombreLista(cabecera, idLista) {
 
         const botonera = cabecera.getElementsByClassName("acciones")[0]
-        const botonEditar = botonera.getElementsByClassName("editar")[0]
-        const botonEliminar = botonera.getElementsByClassName("eliminar")[0]
+        const botonEditar = botonera.getElementsByClassName("tooltip")[0]
+        const botonEliminar = botonera.getElementsByClassName("tooltip")[1]
         const nombreLista = cabecera.getElementsByClassName("nombre")[0]
         botonera.removeChild(botonEditar)
         nombreLista.disabled = false
