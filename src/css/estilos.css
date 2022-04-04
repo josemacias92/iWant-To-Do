@@ -897,7 +897,6 @@ input[type="checkbox"] {
 
     .nombre {
         width: 50vw;
-
     }
 
     /** LISTAS **/
@@ -912,7 +911,7 @@ input[type="checkbox"] {
     }
 
     .capa {
-        height: 100vh;
+        height: 80vh;
     }
 
     .item>.cabecera {
@@ -934,10 +933,6 @@ input[type="checkbox"] {
         width: 8px;
     }
 
-    /* #editor2 + label:first-child {
-        margin: 0px -20px;
-    } */
-
     /* COLORES BOTONES LISTA */
     .card>.cabecera button.eliminar,
     .card>.cabecera button.editar,
@@ -954,6 +949,12 @@ input[type="checkbox"] {
         mask: url('../img/window-close.svg');
         mask-size: cover;
         background: var(--soft-wood);
+    }
+
+    /* EDITAR */
+    .card>.cabecera button.editar {
+        position: relative;
+        top: -1px;
     }
 
     /* EDITAR TAREA  */
