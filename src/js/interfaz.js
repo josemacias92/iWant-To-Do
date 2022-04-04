@@ -186,7 +186,7 @@ export default class Interfaz {
         }
 
         this.generarCabeceraTarea(tareaView, idLista, idTarea, tarea.prioridad, tarea.titulo, tarea.fecha)
-        this.generarContenidoTarea(tareaView, idLista, idTarea, tarea.descripcion, tarea.checklist)
+        this.generarContenidoTarea(tareaView, idLista, idTarea, tarea)
 
         return tareaView
     }
@@ -238,11 +238,11 @@ export default class Interfaz {
         listaView.removeChild(tareaView)
     }
 
-    generarContenidoTarea(tareaView, idLista, idTarea, descripcion, checklist) {
+    generarContenidoTarea(tareaView, idLista, idTarea, tarea) {
 
         const contenido = this.screen.appendChild(tareaView, "div", "", "contenido", "")
-        this.screen.appendChild(contenido, "span", "", "descripcion", descripcion)
-        this.generarChecklist(true, contenido, idLista, idTarea, checklist)
+        this.screen.appendChild(contenido, "span", "", "descripcion", tarea.descripcion)
+        this.generarChecklist(true, contenido, idLista, idTarea, tarea)
         const editar = this.screen.appendChild(contenido, "button", "", "editar", "")
         editar.dataset.indexLista = idLista
         editar.dataset.indexTarea = idTarea
@@ -255,20 +255,20 @@ export default class Interfaz {
         return contenido
     }
 
-    generarChecklist(enabled, contenedor, idLista, idTarea, checklist) {
+    generarChecklist(enabled, contenedor, idLista, idTarea, tarea) {
 
         const lista = this.screen.appendChild(contenedor, "div", "", "checklist", "")
 
-        for (let i = 0; i < checklist.length; i++) {
+        for (let i = 0; i < tarea.checklist.length; i++) {
 
-            const item = checklist[i];
-            this.insertarCheck(enabled, idLista, idTarea, i, lista, item)
+            const item = tarea.checklist[i];
+            this.insertarCheck(enabled, idLista, idTarea, i, lista, tarea, item)
         }
 
         return lista
     }
 
-    insertarCheck(enabled, idLista, idTarea, idCheck, listaView, item) {
+    insertarCheck(enabled, idLista, idTarea, idCheck, listaView, tarea, item) {
 
         const task = this.screen.appendChild(listaView, "div", "", "task", "")
 
@@ -287,7 +287,7 @@ export default class Interfaz {
         const eliminar = this.screen.appendChild(task, "button", "", "eliminar", "")
         eliminar.addEventListener('click', (event) => {
             event.preventDefault()
-            this.viewmodel.deleteCheck(idLista, idTarea, idCheck)
+            tarea.checklist.splice(idCheck, 1)
             listaView.removeChild(task)
         })
 
@@ -298,7 +298,7 @@ export default class Interfaz {
 
     renderizarFooter(contenedor) {
         const footer = this.screen.appendChild(contenedor, "div", "footer", "", "")
-        const autor = this.screen.appendChild(footer, "a", "autor", "", "Created by Jose Macías Muñoz - 2022")
+        const autor = this.screen.appendChild(footer, "a", "autor", "", "Created by josemm92 - 2022")
         autor.setAttribute("href", "https://github.com/josemacias92")
         return footer;
     }

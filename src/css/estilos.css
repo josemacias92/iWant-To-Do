@@ -43,7 +43,7 @@
 .tooltip {
     position: relative;
     display: inline-block;
-  }
+}
 
 .tooltip .tooltiptext {
     visibility: hidden;
@@ -75,13 +75,13 @@
     border-color: var(--private) transparent transparent transparent;
 }
 
-.tooltip *:hover + .tooltiptext,
-.prioridad:hover .tooltiptext{
+.tooltip *:hover+.tooltiptext,
+.prioridad:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
 }
 
-.prioridad:hover .tooltiptext{
+.prioridad:hover .tooltiptext {
     bottom: 1.2rem;
     right: 54rem;
     left: -0.3rem;
@@ -118,11 +118,12 @@
     justify-content: space-evenly;
 }
 
-#footer, #main {
+#footer,
+#main {
     backdrop-filter: blur(1px);
     background-color: var(--crystal-clear);
     border-radius: 5px;
-} 
+}
 
 .vitrina {
     position: absolute;
@@ -184,7 +185,7 @@ form .titulo {
 #dialogo-bienvenida,
 #dialogo-confirmacion,
 #dialogo-informacion {
-    margin-top: 10rem;
+    margin-top: 5rem;
 }
 
 button.aceptar,
@@ -284,7 +285,7 @@ textarea {
 #editor2 {
     margin-top: 10px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 3fr;
     grid-template-rows: 1fr 1fr;
     gap: 10px;
     margin-bottom: 0px;
@@ -422,13 +423,17 @@ a:hover {
     margin: 2px 10px;
 }
 
-.nombre,
-.contenedor-flex input {
-    margin-right: 5px;
+.nombre {
+    border: none;
+    flex: 1;
+    background-color: var(--white-chocolate);
+    height: 1.3rem;
+    padding-bottom: 0.5rem;
 }
 
 .nombre,
 form .titulo {
+    margin-right: 5px;
     font-weight: 600;
     font-size: 1.3rem;
     padding-bottom: 3px;
@@ -440,20 +445,14 @@ form .titulo {
     color: var(--fake-wood);
 }
 
-#editor-nombre {
+/* #editor-nombre {
     position: relative;
     right: 6.35rem;
 
     z-index: 1;
-}
+} */
 
-.nombre {
-    border: none;
-    flex: 1;
-    background-color: var(--white-chocolate);
-    height: 1.3rem;
-    padding-bottom: 0.5rem;
-}
+
 
 button {
     border-radius: 100px;
@@ -682,7 +681,7 @@ input[type="checkbox"] {
 
 .task label {
     flex: 1;
-} 
+}
 
 .task button.eliminar {
     visibility: hidden;
@@ -805,7 +804,7 @@ input[type="checkbox"] {
     }
 
     /* ELIMINAR TAREA */
-    .item .cabecera button.eliminar, 
+    .item .cabecera button.eliminar,
     .task button.eliminar {
         margin: 0px 3px 0px 0px;
         width: 1.45rem;
@@ -813,7 +812,7 @@ input[type="checkbox"] {
     }
 
     .item>.cabecera:hover button.eliminar,
-    .item.show>.cabecera button.eliminar, 
+    .item.show>.cabecera button.eliminar,
     .task:hover button.eliminar {
         -webkit-mask: url('../img/window-close.svg');
         mask: url('../img/window-close.svg');
@@ -821,12 +820,12 @@ input[type="checkbox"] {
         background: var(--soft-wood);
     }
 
-    .item>.cabecera button.eliminar:hover, 
+    .item>.cabecera button.eliminar:hover,
     .task button.eliminar:hover {
         background: var(--dark-wood);
     }
 
-    .item>.cabecera button.eliminar:active, 
+    .item>.cabecera button.eliminar:active,
     .task button.eliminar:active {
         background: var(--goldenlicious);
     }
@@ -848,5 +847,121 @@ input[type="checkbox"] {
 
     .item .contenido button.editar:active {
         background: var(--dark-wood);
+    }
+}
+
+/** MOVILES **/
+@media (max-width: 767.98px) {
+
+    #header,
+    .header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #logo {
+        font-size: 3.5rem;
+        text-align: center;
+    }
+
+    #anadir-lista {
+        height: 3rem;
+        width: 80vw;
+        color: var(--golden-way);
+        border-radius: 5px;
+        background-color: var(--sunglasses);
+        margin-top: 20px;
+        padding: 5px;
+    }
+
+    .acciones {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
+
+    #app {
+        padding: 5px;
+    }
+
+    #main, #footer {
+        margin: 3px;
+        padding: 3px;
+    }
+
+    #main {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .nombre {
+        width: 50vw;
+        margin-bottom: 5px;
+    }
+
+    /** LISTAS **/
+    #main .card, .vitrina .card {
+        width: 80vw;
+    }
+
+    form.card {
+        margin-top: 10px;
+        position: sticky;
+        max-height: 33rem;
+    }
+
+    .capa {
+        height: 50rem;
+    }
+
+    .item>.cabecera {
+        height: 2.6rem;
+    }
+
+    /* DIALOGOS */
+    #editor2 label {
+        width: 10px;
+    }
+
+    #prioridad  {
+        width: 50vw;
+        justify-self: end;
+    }
+
+    #prioridad label {
+        font-size: 0.8rem;
+        width: 8px;
+    }
+
+    /* #editor2 + label:first-child {
+        margin: 0px -20px;
+    } */
+
+    /* COLORES BOTONES LISTA */
+    .card>.cabecera button.eliminar,
+    .card>.cabecera button.editar,
+    button.anadir,
+    button.ok {
+        background: var(--dark-wood);
+        background-repeat: no-repeat;
+    }
+
+    /* ELIMINAR  */
+    .item>.cabecera button.eliminar,
+    .task button.eliminar {
+        -webkit-mask: url('../img/window-close.svg');
+        mask: url('../img/window-close.svg');
+        mask-size: cover;
+        background: var(--soft-wood);
+    }
+
+    /* EDITAR TAREA  */
+    .contenido button.editar {
+        -webkit-mask: url('../img/pencil.svg');
+        mask: url('../img/pencil.svg');
+        mask-size: cover;
+        background-repeat: no-repeat;
+        background: var(--soft-wood);
+        left: 70vw;
     }
 }

@@ -177,7 +177,6 @@ function getSamples() {
 
     var tarea23 = new Tarea("Cocinar algo delicioso", "alta", format(new Date(2022, 4, 2), 'dd/MM/yyyy'), "Hacer espaguetis a la boloñesa.", checklist23)
     tareas2.push(tarea23)
-    tareas2.push(tarea22)
     //
 
     const lista2 = new Lista("Casa", tareas2)

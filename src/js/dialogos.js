@@ -26,6 +26,9 @@ export default class Dialogos {
 
         const botonera = this.screen.appendChild(form, "div", "", "botonera-dialogo", "")
 
+        const body = document.getElementsByTagName("body")[0]
+        var app = document.getElementById("app")
+
         if (this.viewmodel.usuario) {
             const borrar = this.screen.appendChild(botonera, "button", "borrar-datos", "borrar", "Borrar datos")
             borrar.addEventListener('click', (event) => {
@@ -35,8 +38,6 @@ export default class Dialogos {
     
                 this.mostrarDialogoConfirmacion(contenedor, "¿Deseas eliminar todos tus datos de forma permanente?", function () {
                     that.viewmodel.reset()
-                    const body = document.getElementsByTagName("body")[0]
-                    var app = document.getElementById("app")
                     body.removeChild(app)
                     app = that.interfaz.generarInterfaz()
                     that.mostrarDialogoInformacion(app, "Sus datos han sido eliminados con éxito")
@@ -151,7 +152,7 @@ export default class Dialogos {
         var editor3 = this.screen.appendChild(form, "div", "editor3", "", "")
 
         this.screen.appendChild(editor3, "label", "", "", "Check-list")
-        const checkList = this.interfaz.generarChecklist(false, editor3, idLista, idTarea, lista)
+        const checkList = this.interfaz.generarChecklist(false, editor3, idLista, idTarea, oldTarea, lista)
         const checkEditor = this.screen.appendChild(editor3, "div", "checklist", "", "")
 
         const taskBox = this.screen.appendChild(checkEditor, "input", "task", "", "")
@@ -166,7 +167,7 @@ export default class Dialogos {
             event.preventDefault()
             const item = new CheckItem(false, taskBox.value)
             lista.push(item)
-            this.interfaz.insertarCheck(false, idLista, idTarea, lista.length - 1, checkList, item)
+            this.interfaz.insertarCheck(false, idLista, idTarea, lista.length - 1, checkList, oldTarea, item)
             taskBox.value = ""
             taskBox.focus()
             checkList.scrollTop = checkList.scrollHeight
