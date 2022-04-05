@@ -1,6 +1,7 @@
 import { Tarea } from './modelos.js';
 import ScreenPrinter from "./printer"
 import Dialogos from './dialogos.js';
+import rellenarWidgetTiempo from './weatherservice.js'
 
 export default class Interfaz {
 
@@ -33,26 +34,41 @@ export default class Interfaz {
         return app
     }
 
+    generarWidgetTiempo(){
+        const widget = this.screen.createElement("div", "weather", "ocultar", "")
+        const imagen = this.screen.appendChild(widget, "img", "weather-image", "", "")
+        const capa = this.screen.appendChild(widget, "div", "temp-layout", "", "")
+        const temperatura = this.screen.appendChild(capa, "span", "weather-temp", "", "")
+        const loc = this.screen.appendChild(capa, "span", "weather-loc", "", "")
+        const descripcion = this.screen.appendChild(widget, "span", "weather-description", "", "")
+        rellenarWidgetTiempo(widget, imagen, descripcion, temperatura, loc)
+        return widget
+    }
+
     renderizarHeader(contenedor, bienvenida) {
 
         const header = this.screen.appendChild(contenedor, "div", "header", "", "")
-        const capa = this.screen.appendChild(header, "div", "", "header", "")
-        this.screen.appendChild(capa, "span", "logo", "", this.viewmodel.appName)
+        const capa1 = this.screen.appendChild(header, "div", "", "header", "")
+        this.screen.appendChild(capa1, "span", "logo", "", this.viewmodel.appName)
 
-        const login = this.screen.appendChild(capa, "a", "saludo", "", bienvenida)
+        const login = this.screen.appendChild(capa1, "a", "saludo", "", bienvenida)
         login.setAttribute("href", "#")
         login.addEventListener('click', (event) => {
             event.preventDefault()
             this.dialogos.mostrarBienvenida(contenedor)
         })
 
-        const addListaButton = this.screen.appendChild(header, "button", "anadir-lista", "", "Añadir lista nueva")
+        const capa2 = this.screen.appendChild(header, "div", "", "header", "")
+
+        const addListaButton = this.screen.appendChild(capa2, "button", "anadir-lista", "", "Añadir lista nueva")
         addListaButton.addEventListener('click', (event) => {
 
             var idLista = this.viewmodel.addLista()
             const main = document.getElementById("main")
             this.renderizarLista(true, idLista, main, this.viewmodel.listas[idLista])
         })
+
+        capa2.appendChild(this.generarWidgetTiempo())
 
         return header;
     }

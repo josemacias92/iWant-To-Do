@@ -2,19 +2,21 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   entry: {
     index: './src/js/index.js',
     printer: './src/js/printer.js',
     modelos: './src/js/modelos.js',
     viewmodel: './src/js/viewmodel.js',
     dialogos: './src/js/dialogos.js',
+    weatherservice: './src/js/weatherservice.js',
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'iWant To-Do App',
     }),
   ],
+  watch: true,
   devtool: 'inline-source-map',
   devServer: {
     static: './dist',

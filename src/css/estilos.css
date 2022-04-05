@@ -30,7 +30,7 @@
     font-family: var(--noto-sherif);
 }
 
-/* ESTILO ITEMS PRINCIPAL */
+/** ESTILOS ITEMS **/
 .card {
     padding: 5px 10px 10px 10px;
     border-radius: 15px;
@@ -38,6 +38,24 @@
     box-shadow: 5px 8px 12px -2px black;
     background-color: var(--white-chocolate);
     overflow: visible;
+}
+
+#anadir-lista,
+#weather {
+    color: var(--golden-way);
+    border-radius: 5px;
+    background-color: var(--private);
+    margin: 0px 20px;
+    padding: 3px;
+}
+
+#main,
+#footer,
+#anadir-lista,
+#weather,
+.tooltiptext {
+    box-shadow: 5px 8px 8px -4px black;
+    border: 1px solid var(--translucid);
 }
 
 .tooltip {
@@ -96,7 +114,7 @@
     background-color: var(--coffee);
 }
 
-/* CAPAS SOPORTE */
+/** CAPAS SOPORTE **/
 #app {
     background-image: url('../img/lost-in-forest.jpg');
     padding: 20px;
@@ -155,15 +173,7 @@
     visibility: collapse;
 }
 
-#main,
-#footer,
-#anadir-lista,
-.tooltiptext {
-    box-shadow: 5px 8px 8px -4px black;
-    border: 1px solid var(--translucid);
-}
-
-/* DIALOGOS */
+/** DIALOGOS **/
 form.card {
     padding-top: 10px;
     padding-bottom: 5px;
@@ -244,7 +254,7 @@ button.borrar:active {
     margin: 0px 10px 5px 10px;
 }
 
-/** FORMULARIO TAREAS **/
+/* FORMULARIO TAREAS */
 #editor1 {
     display: grid;
     grid-template-columns: 1fr;
@@ -353,7 +363,7 @@ input[type="date"] {
     align-self: flex-end;
 }
 
-/* INTERFAZ */
+/** INTERFAZ **/
 /* CABECERA */
 #header {
     display: flex;
@@ -367,6 +377,7 @@ input[type="date"] {
     display: flex;
     align-items: center;
 }
+
 
 #logo {
     font-family: var(--inspiration);
@@ -387,14 +398,43 @@ a:hover {
     color: aliceblue;
 }
 
+/* WIDGET TIEMPO */
+#weather {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 4fr 1fr;
+    align-items: center;
+    height: 7.5rem;
+    width: 14rem;
+    color: var(--goldenlicious);
+}
+
+#temp-layout {
+    display: flex;
+    flex-direction: column;
+}
+
+#weather-temp {
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+#weather-loc {
+    text-align: center;
+}
+
+#weather-description {
+    grid-column: 1 / span 2;
+    font-size: 0.8rem;
+    text-align: center;
+    place-self: center;
+}
+
 #anadir-lista {
     height: 5rem;
     width: 7rem;
     color: var(--golden-way);
-    border-radius: 5px;
-    background-color: var(--private);
-    margin: 0px 20px;
-    padding: 3px;
 }
 
 #anadir-lista:hover {
@@ -428,7 +468,7 @@ a:hover {
     flex: 1;
     background-color: var(--white-chocolate);
     height: 1.3rem;
-    padding-bottom: 0.5rem;        
+    padding-bottom: 0.5rem;
     margin-bottom: 5px;
 }
 
@@ -445,15 +485,6 @@ form .titulo {
 ::placeholder {
     color: var(--fake-wood);
 }
-
-/* #editor-nombre {
-    position: relative;
-    right: 6.35rem;
-
-    z-index: 1;
-} */
-
-
 
 button {
     border-radius: 100px;
@@ -474,7 +505,7 @@ button {
     height: 1.2rem;
 }
 
-/* TAREAS */
+/** TAREAS **/
 .item {
     margin: 3px;
     border-radius: 13px;
@@ -854,6 +885,22 @@ input[type="checkbox"] {
 /** MOVILES **/
 @media (max-width: 767.98px) {
 
+    #app {
+        background-position: 0rem;
+        padding: 5px;
+    }
+
+    #main,
+    #footer {
+        margin: 3px;
+        padding: 3px;
+    }
+
+    #main {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
     #header,
     .header {
         flex-direction: column;
@@ -865,34 +912,74 @@ input[type="checkbox"] {
         text-align: center;
     }
 
-    #anadir-lista {
+    #anadir-lista,
+    #weather {
         height: 3rem;
-        width: 80vw;
-        color: var(--golden-way);
         border-radius: 5px;
         background-color: var(--sunglasses);
         margin-top: 20px;
         padding: 5px;
+        width: 80vw;
     }
 
+    #anadir-lista {
+    }
+
+    /* WIDGET TIEMPO */
+    #weather {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 3fr 1fr;
+        align-items: center;
+        justify-content: center;
+        height: 6rem;
+        color: var(--goldenlicious);
+        padding: 10px;
+    }
+
+    #weather-image {
+        height: 5rem;
+        width: 5rem;
+        grid-column: 2;
+        grid-row: 1;
+        place-self: center;
+        background-size: cover;
+    }
+
+    #temp-layout {
+        grid-row: 1 / span 2;
+        justify-content: space-between;
+    }
+
+    #weather-temp {
+        font-size: 3.2rem;
+        text-align: center;
+        font-weight: bold;
+        color: var(--golden-way);
+    }
+
+    #weather-loc {
+        font-size: 1.3rem;
+        text-align: center;
+        place-self: center;
+
+    }
+
+    #weather-description {
+        font-size: 0.8rem;
+        text-align: center;
+        place-self: center;
+        grid-column: 2;
+        grid-row: 2;
+        position: relative;
+        bottom: 0.3rem;
+    }
+
+    /* LISTAS */
     .acciones {
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
-    }
-
-    #app {
-        padding: 5px;
-    }
-
-    #main, #footer {
-        margin: 3px;
-        padding: 3px;
-    }
-
-    #main {
-        flex-direction: column;
-        justify-content: flex-start;
     }
 
     .nombre {
@@ -900,7 +987,8 @@ input[type="checkbox"] {
     }
 
     /** LISTAS **/
-    #main .card, .vitrina .card {
+    #main .card,
+    .vitrina .card {
         width: 80vw;
     }
 
@@ -910,20 +998,24 @@ input[type="checkbox"] {
         max-height: 33rem;
     }
 
-    .capa {
-        height: 80vh;
-    }
-
     .item>.cabecera {
         height: 2.6rem;
     }
 
     /* DIALOGOS */
+    .vitrina {
+        position: fixed;
+    }
+
+    .capa {
+        height: 80vh;
+    }
+
     #editor2 label {
         width: 10px;
     }
 
-    #prioridad  {
+    #prioridad {
         width: 50vw;
         justify-self: end;
     }
