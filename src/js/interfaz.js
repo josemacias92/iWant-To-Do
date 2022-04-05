@@ -15,6 +15,12 @@ export default class Interfaz {
         this.dialogos = new Dialogos(this.screen, this, viewmodel)
     }
 
+    reiniciarPrograma() {
+        that.viewmodel.reset()
+        body.removeChild(app)
+        return that.interfaz.generarInterfaz()
+    }
+
     generarInterfaz() {
 
         const login = "Login"
@@ -22,11 +28,11 @@ export default class Interfaz {
         const body = document.getElementsByTagName("body")[0]
         const app = this.screen.appendChild(body, "div", "app", "", "")
 
-        this.renderizarHeader(app, !this.viewmodel.usuario ? login : this.viewmodel.saludo + this.viewmodel.usuario)
+        app.appendChild(this.renderizarHeader(app, !this.viewmodel.usuario ? login : this.viewmodel.saludo + this.viewmodel.usuario))
         this.renderizarTableroListas()
 
         if (!this.viewmodel.usuario) {
-            this.dialogos.mostrarBienvenida(app)
+            this.screen.colocarDialogo(app, this.dialogos.crearDialogoBienvenida(app))
         }
 
         this.renderizarFooter(app)
@@ -34,7 +40,7 @@ export default class Interfaz {
         return app
     }
 
-    generarWidgetTiempo(){
+    generarWidgetTiempo() {
         const widget = this.screen.createElement("div", "weather", "ocultar", "")
         const imagen = this.screen.appendChild(widget, "img", "weather-image", "", "")
         const capa = this.screen.appendChild(widget, "div", "temp-layout", "", "")
@@ -42,12 +48,13 @@ export default class Interfaz {
         const loc = this.screen.appendChild(capa, "span", "weather-loc", "", "")
         const descripcion = this.screen.appendChild(widget, "span", "weather-description", "", "")
         rellenarWidgetTiempo(widget, imagen, descripcion, temperatura, loc)
+
         return widget
     }
 
-    renderizarHeader(contenedor, bienvenida) {
+    renderizarHeader(app, bienvenida) {
 
-        const header = this.screen.appendChild(contenedor, "div", "header", "", "")
+        const header = this.screen.createElement("div", "header", "", "")
         const capa1 = this.screen.appendChild(header, "div", "", "header", "")
         this.screen.appendChild(capa1, "span", "logo", "", this.viewmodel.appName)
 
@@ -55,7 +62,7 @@ export default class Interfaz {
         login.setAttribute("href", "#")
         login.addEventListener('click', (event) => {
             event.preventDefault()
-            this.dialogos.mostrarBienvenida(contenedor)
+            this.screen.colocarDialogo(app, this.dialogos.crearDialogoBienvenida(app))
         })
 
         const capa2 = this.screen.appendChild(header, "div", "", "header", "")
@@ -81,13 +88,13 @@ export default class Interfaz {
 
         for (let i = 0; i < listas.length; i++) {
             const lista = listas[i];
-            this.renderizarLista(false, i, main, lista)
+            main.appendChild(this.renderizarLista(false, i, lista))
         }
     }
 
-    renderizarLista(modoEdicion, idLista, contenedor, lista) {
+    renderizarLista(modoEdicion, idLista, lista) {
 
-        const listaView = this.screen.appendChild(contenedor, "div", "", "card", "")
+        const listaView = this.screen.createElement("div", "", "card", "")
         listaView.id = `lista${idLista}`
         const cabecera = this.generarCabeceraLista(modoEdicion, idLista, listaView, lista.nombre)
         this.renderizarTareas(listaView, idLista, lista.tareas)
@@ -131,16 +138,20 @@ export default class Interfaz {
         eliminar.addEventListener('click', (event) => {
             event.stopPropagation()
             const main = document.getElementById("main")
-            this.dialogos.mostrarDialogoConfirmacion(app, "¿Desea eliminar esta lista?", function () {
+
+            const dialogo = this.dialogos.crearDialogoConfirmacion(app, "¿Desea eliminar esta lista?", function () {
                 that.viewmodel.deleteLista(idLista)
                 app.removeChild(main)
                 that.renderizarTableroListas()
             })
+
+            this.screen.colocarDialogo(app, dialogo)
         })
 
         anadir.addEventListener('click', (event) => {
             var tarea = new Tarea("", "", null, "", [])
-            this.dialogos.mostrarFormularioTarea(app, idLista, -1, tarea)
+            const dialogo = this.dialogos.EditorTareas(app, idLista, -1, tarea)
+            this.screen.colocarDialogo(app, dialogo)
         })
 
         if (modoEdicion) {
@@ -238,11 +249,13 @@ export default class Interfaz {
             event.stopPropagation()
             const main = document.getElementById("main")
             const app = document.getElementById("app")
-            this.dialogos.mostrarDialogoConfirmacion(app, "¿Desea eliminar esta tarea?", function () {
+            const dialogo = this.dialogos.crearDialogoConfirmacion(app, "¿Desea eliminar esta tarea?", function () {
                 that.viewmodel.deleteTarea(idLista, idTarea)
                 app.removeChild(main)
                 that.renderizarTableroListas()
             })
+
+            this.screen.colocarDialogo(app, dialogo)
         })
 
         return cabecera
@@ -265,7 +278,8 @@ export default class Interfaz {
 
         editar.addEventListener('click', (event) => {
             var tarea = this.viewmodel.listas[idLista].tareas[idTarea]
-            this.dialogos.mostrarFormularioTarea(document.getElementById("app"), idLista, idTarea, tarea)
+            const dialogo = this.dialogos.EditorTareas(document.getElementById("app"), idLista, idTarea, tarea)
+            this.screen.colocarDialogo(app, dialogo)
         })
 
         return contenido

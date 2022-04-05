@@ -9,13 +9,14 @@ export default class Dialogos {
         this.viewmodel = viewmodel
     }
 
-    mostrarBienvenida(contenedor) {
+    crearDialogoBienvenida(app) {
 
         const idDialogo = "dialogo-bienvenida"
-        const form = this.screen.colocarDialogo(contenedor, idDialogo)
-        this.screen.appendChild(form, "span", "", "titulo", `¡Bienvenido a ${this.viewmodel.appName}!`)
+        // const form = this.screen.colocarDialogo(contenedor, idDialogo)
+        const dialogo = this.screen.createElement("form", idDialogo, "card", "")
+        this.screen.appendChild(dialogo, "span", "", "titulo", `¡Bienvenido a ${this.viewmodel.appName}!`)
 
-        var editorUsuario = this.screen.appendChild(form, "div", "editor-usuario", "", "")
+        var editorUsuario = this.screen.appendChild(dialogo, "div", "editor-usuario", "", "")
         const aliasLabel = this.screen.appendChild(editorUsuario, "label", "", "", "Escoge tu alias")
         aliasLabel.setAttribute("for", "alias")
         const aliasBox = this.screen.appendChild(editorUsuario, "input", "titulo", "", "")
@@ -24,10 +25,10 @@ export default class Dialogos {
         aliasBox.setAttribute("name", "alias")
         this.screen.moveCursorToEnd(aliasBox)
 
-        const botonera = this.screen.appendChild(form, "div", "", "botonera-dialogo", "")
+        const botonera = this.screen.appendChild(dialogo, "div", "", "botonera-dialogo", "")
 
         const body = document.getElementsByTagName("body")[0]
-        var app = document.getElementById("app")
+        // var app = document.getElementById("app")
 
         if (this.viewmodel.usuario) {
             const borrar = this.screen.appendChild(botonera, "button", "borrar-datos", "borrar", "Borrar datos")
@@ -36,11 +37,10 @@ export default class Dialogos {
                 event.preventDefault()
                 const that = this
     
-                this.mostrarDialogoConfirmacion(contenedor, "¿Deseas eliminar todos tus datos de forma permanente?", function () {
-                    that.viewmodel.reset()
-                    body.removeChild(app)
-                    app = that.interfaz.generarInterfaz()
-                    that.mostrarDialogoInformacion(app, "Sus datos han sido eliminados con éxito")
+                this.crearDialogoConfirmacion(app, "¿Deseas eliminar todos tus datos de forma permanente?", function () {
+                    app = that.interfaz.reiniciarPrograma()
+                    const informacion = that.crearDialogoInformacion(app, "Sus datos han sido eliminados con éxito")
+                    this.screen.colocarDialogo(app, informacion)
                 })
             })
         }
@@ -51,55 +51,64 @@ export default class Dialogos {
             event.preventDefault()
             this.viewmodel.setUsuario(aliasBox.value)
             document.getElementById("saludo").textContent = this.viewmodel.saludo + " " + this.viewmodel.usuario
-            this.screen.removeDialogo(contenedor, form, idDialogo)
+            this.screen.removeDialogo(app, dialogo, idDialogo)
         })
+
+        return dialogo
     }
 
-    mostrarDialogoConfirmacion(contenedor, pregunta, accion) {
+    crearDialogoConfirmacion(contenedor, pregunta, accion) {
 
         const idDialogo = "dialogo-confirmacion"
-        const form = this.screen.colocarDialogo(contenedor, idDialogo)
-        this.screen.appendChild(form, "span", "", "titulo", pregunta)
+        const dialogo = this.screen.createElement("form", idDialogo, "card", "")
+        // const form = this.screen.colocarDialogo(contenedor, idDialogo)
+        this.screen.appendChild(dialogo, "span", "", "titulo", pregunta)
 
-        const botonera = this.screen.appendChild(form, "div", "", "botonera-dialogo", "")
+        const botonera = this.screen.appendChild(dialogo, "div", "", "botonera-dialogo", "")
 
         const cancelar = this.screen.appendChild(botonera, "button", "cancelar-tarea", "cancelar", "Cancelar")
         cancelar.addEventListener('click', (event) => {
-            this.screen.removeDialogo(contenedor, form, idDialogo)
+            this.screen.removeDialogo(contenedor, dialogo, idDialogo)
         })
 
         const aceptar = this.screen.appendChild(botonera, "button", "add-tarea", "aceptar", "Aceptar")
         aceptar.addEventListener('click', (event) => {
             event.preventDefault()
             accion()
-            this.screen.removeDialogo(contenedor, form, idDialogo)
+            this.screen.removeDialogo(contenedor, dialogo, idDialogo)
         })
+
+        return dialogo
     }
 
-    mostrarDialogoInformacion(contenedor, info) {
+    crearDialogoInformacion(contenedor, info) {
 
         const idDialogo = "dialogo-informacion"
-        const form = this.screen.colocarDialogo(contenedor, idDialogo)
-        this.screen.appendChild(form, "span", "", "titulo", info)
+        const dialogo = this.screen.createElement("form", idDialogo, "card", "")
 
-        const botonera = this.screen.appendChild(form, "div", "", "botonera-dialogo", "")
+        this.screen.appendChild(dialogo, "span", "", "titulo", info)
+
+        const botonera = this.screen.appendChild(dialogo, "div", "", "botonera-dialogo", "")
 
         const aceptar = this.screen.appendChild(botonera, "button", "add-tarea", "aceptar", "Aceptar")
         aceptar.addEventListener('click', (event) => {
 
             event.preventDefault()
-            this.screen.removeDialogo(contenedor, form, idDialogo)
+            this.screen.removeDialogo(contenedor, dialogo, idDialogo)
         })
+        
+        return dialogo
     }
 
     //FORMULARIO TAREA
-    mostrarFormularioTarea(contenedor, idLista, idTarea, oldTarea) {
+    EditorTareas(app, idLista, idTarea, oldTarea) {
 
         const idDialogo = "dilogo-tareas"
-        const form = this.screen.colocarDialogo(contenedor, idDialogo)
-        this.screen.appendChild(form, "span", "", "titulo", `${idTarea == -1 ? "Nueva" : "Editar"} tarea`)
+        const dialogo = this.screen.createElement("form", idDialogo, "card", "")
 
-        var editor1 = this.screen.appendChild(form, "div", "editor1", "", "")
+        this.screen.appendChild(dialogo, "span", "", "titulo", `${idTarea == -1 ? "Nueva" : "Editar"} tarea`)
+
+        var editor1 = this.screen.appendChild(dialogo, "div", "editor1", "", "")
         const tituloLabel = this.screen.appendChild(editor1, "label", "", "", "Título")
         tituloLabel.setAttribute("for", "titulo")
         const tituloBox = this.screen.appendChild(editor1, "input", "titulo", "", "")
@@ -114,7 +123,7 @@ export default class Dialogos {
         descripcionArea.setAttribute("maxlength", "300")
         descripcionArea.setAttribute("name", "descripcion")
 
-        var editor2 = this.screen.appendChild(form, "div", "editor2", "", "")
+        var editor2 = this.screen.appendChild(dialogo, "div", "editor2", "", "")
         this.screen.appendChild(editor2, "label", "", "", "Prioridad")
         const prioridadControl = this.screen.appendChild(editor2, "div", "prioridad", "", "")
         const altaLabel = this.screen.appendChild(prioridadControl, "label", "", "", "Alta")
@@ -149,7 +158,7 @@ export default class Dialogos {
         fechaBox.valueAsDate = oldTarea.fecha ? parse(oldTarea.fecha, 'dd/MM/yyyy', new Date()) : new Date();
 
         const lista = oldTarea.checklist
-        var editor3 = this.screen.appendChild(form, "div", "editor3", "", "")
+        var editor3 = this.screen.appendChild(dialogo, "div", "editor3", "", "")
 
         this.screen.appendChild(editor3, "label", "", "", "Check-list")
         const checkList = this.interfaz.generarChecklist(false, editor3, idLista, idTarea, oldTarea, lista)
@@ -173,11 +182,11 @@ export default class Dialogos {
             checkList.scrollTop = checkList.scrollHeight
         })
 
-        const botonera = this.screen.appendChild(form, "div", "botonera-dialogo-tarea", "", "")
+        const botonera = this.screen.appendChild(dialogo, "div", "botonera-dialogo-tarea", "", "")
 
         const cancelar = this.screen.appendChild(botonera, "button", "cancelarTarea", "cancelar", "Cancelar")
         cancelar.addEventListener('click', (event) => {
-            this.screen.removeDialogo(contenedor, form, idDialogo)
+            this.screen.removeDialogo(app, dialogo, idDialogo)
         })
 
         const aceptar = this.screen.appendChild(botonera, "button", "add-tarea", "aceptar", "Aceptar")
@@ -186,7 +195,7 @@ export default class Dialogos {
             event.preventDefault()
             var prioridad = altaRadio.checked ? "alta" : (mediaRadio.checked ? "media" : "baja")
             var newTarea = new Tarea(tituloBox.value, prioridad, format(new Date(fechaBox.value), 'dd/MM/yyyy'), descripcionArea.value, lista)
-            this.screen.removeDialogo(contenedor, form, idDialogo)
+            this.screen.removeDialogo(app, dialogo, idDialogo)
 
             const listaView = document.getElementById(`lista${idLista}`)
 
@@ -201,5 +210,7 @@ export default class Dialogos {
             var tareaView = this.interfaz.visualizarTarea(listaView, idLista, idTarea, newTarea)
             tareaView.classList.add("show")
         })
+
+        return dialogo
     }
 }
