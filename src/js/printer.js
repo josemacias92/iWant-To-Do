@@ -1,23 +1,23 @@
 export default class ScreenPrinter {
 
-//   colocarDialogo(contenedor, idDialogo) {
-//     const vitrina = this.appendChild(contenedor, "div", `oscurecedor${idDialogo}`, "vitrina", "")
-//     const capa = this.appendChild(vitrina, "div", "", "capa", "")
-//     const form = this.appendChild(capa, "form", idDialogo, "card", "")
-//     return form
-// }
+  //   colocarDialogo(contenedor, idDialogo) {
+  //     const vitrina = this.appendChild(contenedor, "div", `oscurecedor${idDialogo}`, "vitrina", "")
+  //     const capa = this.appendChild(vitrina, "div", "", "capa", "")
+  //     const form = this.appendChild(capa, "form", idDialogo, "card", "")
+  //     return form
+  // }
 
-colocarDialogo(app, dialogo) {
-  const vitrina = this.appendChild(app, "div", `oscurecedor${dialogo.id}`, "vitrina", "")
-  const capa = this.appendChild(vitrina, "div", "", "capa", "")
-  capa.appendChild(dialogo)
-}
+  colocarDialogo(app, dialogo) {
+    const vitrina = this.appendChild(app, "div", `oscurecedor-${dialogo.id}`, "vitrina", "")
+    const capa = this.appendChild(vitrina, "div", "", "capa", "")
+    capa.appendChild(dialogo)
+  }
 
-removeDialogo(app, form, idDialogo) {
+  removeDialogo(app, form, idDialogo) {
     form.reset()
-    const vitrina = document.getElementById(`oscurecedor${idDialogo}`)
+    const vitrina = document.getElementById(`oscurecedor-${idDialogo}`)
     app.removeChild(vitrina)
-}
+  }
 
   moveCursorToEnd(input) {
     input.focus()

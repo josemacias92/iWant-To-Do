@@ -4,22 +4,8 @@ export default function rellenarWidgetTiempo(widget, imagen, descripcion, temper
 
     const printer = new ScreenPrinter()
 
-    // fetch('https://api.giphy.com/v1/gifs/translate?api_key=bb2006d9d3454578be1a99cfad65913d&s=cat', { mode: 'cors' })
-    //     .then(function (response) {
-    //         console.log("before " + response)
-
-    //         return response.json()
-    //     })
-    //     .then(function (response) {
-    //         console.log("lo tengo " + response)
-
-    //     })
-    //     .catch(e => {
-    //         console.log(e)
-    //     })
-
     const opcionesDeSolicitud = {
-        enableHighAccuracy: false,
+        enableHighAccuracy: true,
         maximumAge: 0,
         timeout: 10000
     };
@@ -47,7 +33,7 @@ export default function rellenarWidgetTiempo(widget, imagen, descripcion, temper
                 descripcion.textContent = data.weather[0].description
                 temperatura.textContent = Math.round(data.main.temp) + "°C"
                 loc.textContent = data.name
-                widget.classList.remove("ocultar")
+                widget.classList.remove("oculto")
             }, function mostrarError(err) {
                 console.log("No se ha podido cargar la información metereológica: " + err)
             })
@@ -59,21 +45,4 @@ export default function rellenarWidgetTiempo(widget, imagen, descripcion, temper
     }
 
     navigator.geolocation.getCurrentPosition(getWeather, onErrorDeUbicacion, opcionesDeSolicitud)
-}
-
-class Locator {
-
-    getLocation() {
-        if ("geolocation" in navigator) {
-            return Promise.resolve(navigator.geolocation.getCurrentPosition(onUbicacionConcedida, onErrorDeUbicacion, opcionesDeSolicitud));
-        } else {
-            console.log("Este navegador no soporta el acceso a la ubicación. Usando ubicación de Elche");
-            return Promise.resolve(this.defaultLocation)
-        }
-    }
-
-    onUbicacionConcedida = ubicacion => {
-        console.log("Tengo la ubicación: ", ubicacion);
-        return ubicacion.coords
-    }
 }

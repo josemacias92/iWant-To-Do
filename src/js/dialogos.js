@@ -9,10 +9,35 @@ export default class Dialogos {
         this.viewmodel = viewmodel
     }
 
-    crearDialogoBienvenida(app) {
+    setLayout(mainLayout) {
+        this.app = mainLayout
+    }
+
+    show(idDialogo, ...parametros) {
+
+        var dialogo
+
+        switch (idDialogo) {
+            case "dialogo-bienvenida":
+                dialogo = this.DialogoBienvenida()
+                break
+            case "dialogo-confirmacion":
+                dialogo = this.DialogoConfirmacion(...parametros)
+                break
+            case "dialogo-informacion":
+                dialogo = this.DialogoInformacion(parametros[0])
+                break
+            case "dialogo-tareas":
+                dialogo = this.EditorTareas(parametros[0], parametros[1], parametros[2])
+                break
+        }
+
+        this.screen.colocarDialogo(this.app, dialogo)
+    }
+
+    DialogoBienvenida() {
 
         const idDialogo = "dialogo-bienvenida"
-        // const form = this.screen.colocarDialogo(contenedor, idDialogo)
         const dialogo = this.screen.createElement("form", idDialogo, "card", "")
         this.screen.appendChild(dialogo, "span", "", "titulo", `¡Bienvenido a ${this.viewmodel.appName}!`)
 
@@ -28,7 +53,6 @@ export default class Dialogos {
         const botonera = this.screen.appendChild(dialogo, "div", "", "botonera-dialogo", "")
 
         const body = document.getElementsByTagName("body")[0]
-        // var app = document.getElementById("app")
 
         if (this.viewmodel.usuario) {
             const borrar = this.screen.appendChild(botonera, "button", "borrar-datos", "borrar", "Borrar datos")
@@ -36,12 +60,14 @@ export default class Dialogos {
 
                 event.preventDefault()
                 const that = this
-    
-                this.crearDialogoConfirmacion(app, "¿Deseas eliminar todos tus datos de forma permanente?", function () {
-                    app = that.interfaz.reiniciarPrograma()
-                    const informacion = that.crearDialogoInformacion(app, "Sus datos han sido eliminados con éxito")
-                    this.screen.colocarDialogo(app, informacion)
+
+                const confirmacion = this.DialogoConfirmacion("¿Deseas eliminar todos tus datos de forma permanente?", function () {
+                    that.app = that.interfaz.reiniciarPrograma()
+                    const informacion = that.DialogoInformacion("Sus datos han sido eliminados con éxito")
+                    that.screen.colocarDialogo(that.app, informacion)
                 })
+
+                this.screen.colocarDialogo(this.app, confirmacion)
             })
         }
 
@@ -51,37 +77,36 @@ export default class Dialogos {
             event.preventDefault()
             this.viewmodel.setUsuario(aliasBox.value)
             document.getElementById("saludo").textContent = this.viewmodel.saludo + " " + this.viewmodel.usuario
-            this.screen.removeDialogo(app, dialogo, idDialogo)
+            this.screen.removeDialogo(this.app, dialogo, idDialogo)
         })
 
         return dialogo
     }
 
-    crearDialogoConfirmacion(contenedor, pregunta, accion) {
+    DialogoConfirmacion(pregunta, accion, ...parametros) {
 
         const idDialogo = "dialogo-confirmacion"
         const dialogo = this.screen.createElement("form", idDialogo, "card", "")
-        // const form = this.screen.colocarDialogo(contenedor, idDialogo)
         this.screen.appendChild(dialogo, "span", "", "titulo", pregunta)
 
         const botonera = this.screen.appendChild(dialogo, "div", "", "botonera-dialogo", "")
 
         const cancelar = this.screen.appendChild(botonera, "button", "cancelar-tarea", "cancelar", "Cancelar")
         cancelar.addEventListener('click', (event) => {
-            this.screen.removeDialogo(contenedor, dialogo, idDialogo)
+            this.screen.removeDialogo(this.app, dialogo, idDialogo)
         })
 
         const aceptar = this.screen.appendChild(botonera, "button", "add-tarea", "aceptar", "Aceptar")
         aceptar.addEventListener('click', (event) => {
             event.preventDefault()
-            accion()
-            this.screen.removeDialogo(contenedor, dialogo, idDialogo)
+            this.screen.removeDialogo(this.app, dialogo, idDialogo)
+            accion(...parametros)
         })
 
         return dialogo
     }
 
-    crearDialogoInformacion(contenedor, info) {
+    DialogoInformacion(info) {
 
         const idDialogo = "dialogo-informacion"
         const dialogo = this.screen.createElement("form", idDialogo, "card", "")
@@ -94,16 +119,16 @@ export default class Dialogos {
         aceptar.addEventListener('click', (event) => {
 
             event.preventDefault()
-            this.screen.removeDialogo(contenedor, dialogo, idDialogo)
+            this.screen.removeDialogo(this.app, dialogo, idDialogo)
         })
-        
+
         return dialogo
     }
 
     //FORMULARIO TAREA
-    EditorTareas(app, idLista, idTarea, oldTarea) {
+    EditorTareas(idLista, idTarea, oldTarea) {
 
-        const idDialogo = "dilogo-tareas"
+        const idDialogo = "dialogo-tareas"
         const dialogo = this.screen.createElement("form", idDialogo, "card", "")
 
         this.screen.appendChild(dialogo, "span", "", "titulo", `${idTarea == -1 ? "Nueva" : "Editar"} tarea`)
@@ -186,7 +211,7 @@ export default class Dialogos {
 
         const cancelar = this.screen.appendChild(botonera, "button", "cancelarTarea", "cancelar", "Cancelar")
         cancelar.addEventListener('click', (event) => {
-            this.screen.removeDialogo(app, dialogo, idDialogo)
+            this.screen.removeDialogo(this.app, dialogo, idDialogo)
         })
 
         const aceptar = this.screen.appendChild(botonera, "button", "add-tarea", "aceptar", "Aceptar")
@@ -195,7 +220,7 @@ export default class Dialogos {
             event.preventDefault()
             var prioridad = altaRadio.checked ? "alta" : (mediaRadio.checked ? "media" : "baja")
             var newTarea = new Tarea(tituloBox.value, prioridad, format(new Date(fechaBox.value), 'dd/MM/yyyy'), descripcionArea.value, lista)
-            this.screen.removeDialogo(app, dialogo, idDialogo)
+            this.screen.removeDialogo(this.app, dialogo, idDialogo)
 
             const listaView = document.getElementById(`lista${idLista}`)
 

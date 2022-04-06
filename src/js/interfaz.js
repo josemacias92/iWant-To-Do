@@ -16,9 +16,11 @@ export default class Interfaz {
     }
 
     reiniciarPrograma() {
-        that.viewmodel.reset()
+        const body = document.getElementsByTagName("body")[0]
+        const app = document.getElementById("app")
+        this.viewmodel.reset()
         body.removeChild(app)
-        return that.interfaz.generarInterfaz()
+        return this.generarInterfaz()
     }
 
     generarInterfaz() {
@@ -27,12 +29,13 @@ export default class Interfaz {
 
         const body = document.getElementsByTagName("body")[0]
         const app = this.screen.appendChild(body, "div", "app", "", "")
+        this.dialogos.setLayout(app)
 
         app.appendChild(this.renderizarHeader(app, !this.viewmodel.usuario ? login : this.viewmodel.saludo + this.viewmodel.usuario))
         this.renderizarTableroListas()
 
         if (!this.viewmodel.usuario) {
-            this.screen.colocarDialogo(app, this.dialogos.crearDialogoBienvenida(app))
+            this.dialogos.show("dialogo-bienvenida")
         }
 
         this.renderizarFooter(app)
@@ -41,7 +44,7 @@ export default class Interfaz {
     }
 
     generarWidgetTiempo() {
-        const widget = this.screen.createElement("div", "weather", "ocultar", "")
+        const widget = this.screen.createElement("div", "weather", "oculto", "")
         const imagen = this.screen.appendChild(widget, "img", "weather-image", "", "")
         const capa = this.screen.appendChild(widget, "div", "temp-layout", "", "")
         const temperatura = this.screen.appendChild(capa, "span", "weather-temp", "", "")
@@ -62,17 +65,17 @@ export default class Interfaz {
         login.setAttribute("href", "#")
         login.addEventListener('click', (event) => {
             event.preventDefault()
-            this.screen.colocarDialogo(app, this.dialogos.crearDialogoBienvenida(app))
+            this.dialogos.show("dialogo-bienvenida")
         })
 
         const capa2 = this.screen.appendChild(header, "div", "", "header", "")
 
         const addListaButton = this.screen.appendChild(capa2, "button", "anadir-lista", "", "Añadir lista nueva")
         addListaButton.addEventListener('click', (event) => {
-
+            
             var idLista = this.viewmodel.addLista()
             const main = document.getElementById("main")
-            this.renderizarLista(true, idLista, main, this.viewmodel.listas[idLista])
+            main.appendChild(this.renderizarLista(idLista, this.viewmodel.listas[idLista], true))
         })
 
         capa2.appendChild(this.generarWidgetTiempo())
@@ -88,11 +91,11 @@ export default class Interfaz {
 
         for (let i = 0; i < listas.length; i++) {
             const lista = listas[i];
-            main.appendChild(this.renderizarLista(false, i, lista))
+            main.appendChild(this.renderizarLista(i, lista))
         }
     }
 
-    renderizarLista(modoEdicion, idLista, lista) {
+    renderizarLista(idLista, lista, modoEdicion) {
 
         const listaView = this.screen.createElement("div", "", "card", "")
         listaView.id = `lista${idLista}`
@@ -139,19 +142,16 @@ export default class Interfaz {
             event.stopPropagation()
             const main = document.getElementById("main")
 
-            const dialogo = this.dialogos.crearDialogoConfirmacion(app, "¿Desea eliminar esta lista?", function () {
+            this.dialogos.show("dialogo-confirmacion", "¿Desea eliminar esta lista?", function eliminarLista() {
                 that.viewmodel.deleteLista(idLista)
                 app.removeChild(main)
                 that.renderizarTableroListas()
             })
-
-            this.screen.colocarDialogo(app, dialogo)
         })
 
         anadir.addEventListener('click', (event) => {
             var tarea = new Tarea("", "", null, "", [])
-            const dialogo = this.dialogos.EditorTareas(app, idLista, -1, tarea)
-            this.screen.colocarDialogo(app, dialogo)
+            this.dialogos.show("dialogo-tareas", idLista, -1, tarea)
         })
 
         if (modoEdicion) {
@@ -170,6 +170,7 @@ export default class Interfaz {
         botonera.removeChild(botonEditar)
         nombreLista.disabled = false
         this.screen.moveCursorToEnd(nombreLista)
+        nombreLista.focus()
 
         const botonAceptar = this.screen.insertBeforeElement(botonEliminar, "button", "", "ok", "")
         botonAceptar.addEventListener('click', (event) => {
@@ -196,20 +197,20 @@ export default class Interfaz {
     }
 
     visualizarTarea(listaView, idLista, idTarea, tarea) {
-        const prevTareaView = document.getElementById(`tarea${idLista}${+idTarea - 1}`)
+        const prevTareaView = document.getElementById(`tarea${idLista}-${+idTarea - 1}`)
         var tareaView;
 
         if (prevTareaView == null) {
-            const nextTareaView = document.getElementById(`tarea${idLista}${+idTarea + 1}`)
+            const nextTareaView = document.getElementById(`tarea${idLista}-${+idTarea + 1}`)
 
             if (nextTareaView == null) {
-                tareaView = this.screen.appendChild(listaView, "div", `tarea${idLista}${idTarea}`, "item", "")
+                tareaView = this.screen.appendChild(listaView, "div", `tarea${idLista}-${idTarea}`, "item", "")
 
             } else {
-                tareaView = this.screen.insertBeforeElement(nextTareaView, "div", `tarea${idLista}${idTarea}`, "item", "")
+                tareaView = this.screen.insertBeforeElement(nextTareaView, "div", `tarea${idLista}-${idTarea}`, "item", "")
             }
         } else {
-            tareaView = this.screen.insertAfterElement(prevTareaView, "div", `tarea${idLista}${idTarea}`, "item", "")
+            tareaView = this.screen.insertAfterElement(prevTareaView, "div", `tarea${idLista}-${idTarea}`, "item", "")
         }
 
         this.generarCabeceraTarea(tareaView, idLista, idTarea, tarea.prioridad, tarea.titulo, tarea.fecha)
@@ -239,7 +240,7 @@ export default class Interfaz {
             const idLista = event.target.dataset.indexLista
             const idTarea = event.target.dataset.indexTarea
             event.target.classList.toggle("show");
-            document.getElementById(`tarea${idLista}${idTarea}`).classList.toggle("show")
+            document.getElementById(`tarea${idLista}-${idTarea}`).classList.toggle("show")
             console.log(event.target)
         })
 
@@ -249,13 +250,12 @@ export default class Interfaz {
             event.stopPropagation()
             const main = document.getElementById("main")
             const app = document.getElementById("app")
-            const dialogo = this.dialogos.crearDialogoConfirmacion(app, "¿Desea eliminar esta tarea?", function () {
+
+            this.dialogos.show("dialogo-confirmacion", "¿Desea eliminar esta tarea?", function eliminarTarea() {
                 that.viewmodel.deleteTarea(idLista, idTarea)
                 app.removeChild(main)
                 that.renderizarTableroListas()
             })
-
-            this.screen.colocarDialogo(app, dialogo)
         })
 
         return cabecera
@@ -263,7 +263,7 @@ export default class Interfaz {
 
     eliminarVistaTarea(idLista, idTarea) {
         const listaView = document.getElementById(`lista${idLista}`)
-        const tareaView = document.getElementById(`tarea${idLista}${idTarea}`)
+        const tareaView = document.getElementById(`tarea${idLista}-${idTarea}`)
         listaView.removeChild(tareaView)
     }
 
@@ -278,8 +278,7 @@ export default class Interfaz {
 
         editar.addEventListener('click', (event) => {
             var tarea = this.viewmodel.listas[idLista].tareas[idTarea]
-            const dialogo = this.dialogos.EditorTareas(document.getElementById("app"), idLista, idTarea, tarea)
-            this.screen.colocarDialogo(app, dialogo)
+            this.dialogos.show("dialogo-tareas", idLista, idTarea, tarea)
         })
 
         return contenido
@@ -302,7 +301,7 @@ export default class Interfaz {
 
         const task = this.screen.appendChild(listaView, "div", "", "task", "")
 
-        const check = this.screen.appendChild(task, "input", `done${idLista}${idTarea}${idCheck}`, "", "")
+        const check = this.screen.appendChild(task, "input", `done${idLista}-${idTarea}-${idCheck}`, "", "")
         check.setAttribute("name", check.id)
         check.setAttribute("type", "checkbox")
         check.disabled = !enabled

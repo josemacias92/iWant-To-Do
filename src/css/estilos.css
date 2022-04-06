@@ -170,7 +170,9 @@
 }
 
 .oculto {
-    visibility: collapse;
+    visibility: hidden;
+    display: none;
+    position: absolute;
 }
 
 /** DIALOGOS **/
@@ -709,6 +711,8 @@ input[type="checkbox"] {
 .task {
     display: flex;
     align-items: center;
+    justify-content: center;
+    align-content: center;
 }
 
 .task label {
@@ -721,6 +725,12 @@ input[type="checkbox"] {
 
 #editor3 .task button.eliminar {
     visibility: visible;
+    position: relative;
+    top: 1px;
+}
+
+#editor3 .task:hover {
+    background-color: var(--goldenlicious);
 }
 
 .contenido button.editar,
@@ -840,7 +850,7 @@ input[type="checkbox"] {
     .task button.eliminar {
         margin: 0px 3px 0px 0px;
         width: 1.45rem;
-        height: 1.45rem;
+        height: 1.3rem;
     }
 
     .item>.cabecera:hover button.eliminar,
